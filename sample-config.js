@@ -12,7 +12,8 @@ const config = {
     slackChannel: '<SLACK CHANNEL TO WATCH>',
     twitchName: '<TWITCH NAME>',
     twitchKey: '<TWITCH API KEY>',
-    twitchChannel: '<TWITCH CHAT CHANNEL>'
+    twitchChannel: '<TWITCH CHAT CHANNEL>',
+    twitchMod: '<TWITCH NAME OF MOD>'
 };
 
 module.exports = config;
