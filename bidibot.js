@@ -8,7 +8,7 @@ class BidiBot {
     }
 
     start() {
-        const chatRelay = new Relay(this.settings.slackChannel, this.settings.twitchChannel);
+        const chatRelay = new Relay(this.settings.slackChannel, this.settings.twitchChannel, this.settings.twitchMod);
         const slackBot = new SlackBot(this.settings, chatRelay);
         const twitchBot = new TwitchBot(this.settings, chatRelay);
 

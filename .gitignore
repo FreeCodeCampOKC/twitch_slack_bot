@@ -126,5 +126,8 @@ $RECYCLE.BIN/
 # VS Code
 .vscode
 
+# Webstorm
+.idea
+
 config.js
 ./config.js

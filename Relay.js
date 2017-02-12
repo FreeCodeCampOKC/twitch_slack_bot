@@ -1,9 +1,10 @@
 class Relay {
-    constructor(slackChannel, twitchChannel) {
+    constructor(slackChannel, twitchChannel, twitchMod) {
         this.slackBot;
         this.twitchBot;
         this.slackChannel = slackChannel;
         this.twitchChannel = twitchChannel;
+        this.twitchMod = twitchMod;
     }
 
     createBot(bot, type) {
@@ -24,13 +25,28 @@ class Relay {
         console.log('From:', user);
         console.log('To:', destination);
 
+        function getMessageForSlack(twitchMod)
+        {
+            console.log(twitchMod);
+            if (twitchMod && user === twitchMod && message.substring(0, 1) === "!")
+            {
+                //This is a mod command that doesn't need to be sent to Slack
+                console.log("Not sending to Slack:", message);
+                return undefined;
+            }
+            else
+            {
+                return `*${ user }* said: \n>>>${ message }`;
+            }
+        }
+
         function getMessageForTwitch()
         {
             var regex = /^<@.*\|.*> (has (joined|left) the channel|set the channel (purpose|topic))/;
 
             if (message.match(regex))
             {
-                console.log(message);
+                console.log("Not sending to Twitch:", message);
                 return undefined;
             }
             else
@@ -41,8 +57,11 @@ class Relay {
 
         switch (destination.toLowerCase()) {
         case 'slack':
-            message = `On Twitch, *${ user }* said: \n>>>${ message }`;
-            this.slackBot.postMessageToChannel(this.slackChannel, message);
+            message = getMessageForSlack(this.twitchMod);
+            if (message)
+            {
+                this.slackBot.postMessageToChannel(this.slackChannel, message);
+            }
             break;
         case 'twitch':
             message = getMessageForTwitch();
