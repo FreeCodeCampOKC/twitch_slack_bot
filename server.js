@@ -22,7 +22,8 @@ const slackKey = process.env.SLACK_KEY || config.slackKey,
     slackChannel = process.env.SLACK_CHANNEL || config.slackChannel,
     twitchName = process.env.TWITCH_NAME || config.twitchName,
     twitchKey = process.env.TWITCH_KEY || config.twitchKey,
-    twitchChannel =	process.env.TWITCH_CHANNEL || config.twitchChannel;
+    twitchChannel =	process.env.TWITCH_CHANNEL || config.twitchChannel,
+    twitchMod = process.env.TWITCH_MOD || config.twitchMod;
 
 // Create BidiBot object
 const bidiBot = new BidiBot({
@@ -31,7 +32,8 @@ const bidiBot = new BidiBot({
     slackChannel,
     twitchName,
     twitchKey,
-    twitchChannel
+    twitchChannel,
+    twitchMod
 });
 
 // Start the bot.

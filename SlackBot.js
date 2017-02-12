@@ -51,22 +51,26 @@ class SlackBot {
                 function replaceUserNames(messageText)
                 {
                     var tagsRegex = /<@\w{9}>/g;
-                    var idRegex = /\w{9}/;
                     var tags = messageText.match(tagsRegex);
 
-                    for (var i = 0; i < tags.length; i++)
+                    if (tags)
                     {
-                        var tag = tags[i];
-                        var id = tag.match(idRegex)[0];
-                        var username = getUserNameByID(id);
+                        var idRegex = /\w{9}/;
 
-                        if (username)
+                        for (var i = 0; i < tags.length; i++)
                         {
-                            messageText = messageText.replace(tag, '@' + username);
+                            var tag = tags[i];
+                            var id = tag.match(idRegex)[0];
+                            var username = getUserNameByID(id);
+
+                            if (username)
+                            {
+                                messageText = messageText.replace(tag, '@' + username);
+                            }
                         }
                     }
 
-                    return messageText;
+                    return messageText.replace("<!channel>", "@channel").replace("<!here|@here>", "@here");
                 }
 
                 // Get the user name from the user id.
